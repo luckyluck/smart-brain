@@ -1,6 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions';
+import { NavLink } from 'react-router-dom';
 
-class Signin extends React.Component {
+class SignIn extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,25 +21,13 @@ class Signin extends React.Component {
     };
 
     onSubmitSignIn = () => {
-        fetch('http://localhost:3001/signin', {
-            method: 'post',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                email: this.state.signInEmail,
-                password: this.state.signInPassword
-            })
-        })
-            .then(response => response.json())
-            .then(user => {
-                if (user.id) {
-                    this.props.loadUser(user);
-                    this.props.onRouteChange('home');
-                }
-            });
+        this.props.signIn(
+            this.state.signInEmail,
+            this.state.signInPassword
+        );
     };
 
     render() {
-        const { onRouteChange } = this.props;
         return (
             <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
                 <main className="pa4 black-80">
@@ -73,8 +64,9 @@ class Signin extends React.Component {
                             />
                         </div>
                         <div className="lh-copy mt3">
-                            <p onClick={() => onRouteChange('register')}
-                               className="f6 link dim black db pointer">Register</p>
+                            <NavLink to={'register'} className={'f6 link dim black db pointer'}>
+                                Register
+                            </NavLink>
                         </div>
                     </div>
                 </main>
@@ -83,4 +75,8 @@ class Signin extends React.Component {
     }
 }
 
-export default Signin;
+const mapDispatchToProps = dispatch => ({
+    signIn: (email, password) => dispatch(actions.signIn(email, password))
+});
+
+export default connect(null, mapDispatchToProps)(SignIn);

@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions';
 
 class Register extends React.Component {
     constructor(props) {
@@ -23,22 +25,11 @@ class Register extends React.Component {
     };
 
     onSubmitSignIn = () => {
-        fetch('http://localhost:3001/register', {
-            method: 'post',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                email: this.state.email,
-                password: this.state.password,
-                name: this.state.name
-            })
-        })
-            .then(response => response.json())
-            .then(user => {
-                if (user.id) {
-                    this.props.loadUser(user);
-                    this.props.onRouteChange('home');
-                }
-            });
+        this.props.auth(
+            this.state.email,
+            this.state.password,
+            this.state.name
+        );
     };
 
     render() {
@@ -94,4 +85,8 @@ class Register extends React.Component {
     }
 }
 
-export default Register;
+const mapDispatchToProps = dispatch => ({
+    auth: (email, password, name) => dispatch(actions.auth(email, password, name))
+});
+
+export default connect(null, mapDispatchToProps)(Register);

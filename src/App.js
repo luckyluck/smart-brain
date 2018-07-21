@@ -21,15 +21,6 @@ const particlesOptions = {
 };
 
 class App extends Component {
-
-    // componentWillReceiveProps(newProps, oldProps) {
-    //     console.log('newProps:', newProps);
-    //     console.log('oldProps:', oldProps);
-    //     if (newProps.isSignedIn && newProps.isSignedIn !== oldProps.isSignedIn) {
-    //
-    //     }
-    // }
-
     render() {
         return (
             <div className="App">
@@ -42,7 +33,7 @@ class App extends Component {
                     {!this.props.isSignedIn ? <Route path="/login" component={SignIn}/> : null}
                     {!this.props.isSignedIn ? <Route path="/register" component={Register}/> : null}
                     {!this.props.isSignedIn ? <Redirect to="/login"/> : null}
-                    <Route path="/" component={Home} exact={true}/>
+                    <Route exact path="/" component={Home}/>
                 </Switch>
             </div>
         );

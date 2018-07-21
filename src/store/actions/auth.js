@@ -1,5 +1,6 @@
-import * as actionTypes from './actionTypes';
+import { push } from 'react-router-redux';
 import axios from 'axios';
+import * as actionTypes from './actionTypes';
 
 export const loadUser = user => ({
     type: actionTypes.LOAD_USER,
@@ -15,6 +16,7 @@ export const auth = (email, password, name) => {
         ).then(response => {
             if (response.data.id) {
                 dispatch(loadUser(response.data));
+                dispatch(push('/'));
             }
         });
     };
@@ -28,6 +30,7 @@ export const signIn = (email, password) => {
         ).then(response => {
             if (response.data.id) {
                 dispatch(loadUser(response.data));
+                dispatch(push('/'));
             }
         });
     };

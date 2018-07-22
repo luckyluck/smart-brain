@@ -25,7 +25,7 @@ class Register extends React.Component {
     };
 
     onSubmitSignIn = () => {
-        this.props.auth(
+        this.props.register(
             this.state.email,
             this.state.password,
             this.state.name
@@ -86,7 +86,7 @@ class Register extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    auth: (email, password, name) => dispatch(actions.auth(email, password, name))
+    register: (email, password, name) => dispatch(actions.register(email, password, name))
 });
 
 export default connect(null, mapDispatchToProps)(Register);

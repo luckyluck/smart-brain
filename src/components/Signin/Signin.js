@@ -21,7 +21,7 @@ class SignIn extends React.Component {
     };
 
     onSubmitSignIn = () => {
-        this.props.signIn(
+        this.props.login(
             this.state.signInEmail,
             this.state.signInPassword
         );
@@ -76,7 +76,7 @@ class SignIn extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    signIn: (email, password) => dispatch(actions.signIn(email, password))
+    login: (email, password) => dispatch(actions.login(email, password))
 });
 
 export default connect(null, mapDispatchToProps)(SignIn);

@@ -7,6 +7,8 @@ import SignIn from './components/Signin/Signin';
 import Register from './components/Register/Register';
 import './App.css';
 import Home from './components/Home/Home';
+import RequireAuth from './hoc/RequireAuth/RequireAuth';
+import * as actions from './store/actions';
 
 const particlesOptions = {
     particles: {
@@ -21,6 +23,10 @@ const particlesOptions = {
 };
 
 class App extends Component {
+    logout = () => {
+        this.props.logout();
+    };
+
     render() {
         return (
             <div className="App">
@@ -28,12 +34,12 @@ class App extends Component {
                     className='particles'
                     params={particlesOptions}
                 />
-                <Navigation isSignedIn={this.props.isSignedIn}/>
+                <Navigation isSignedIn={this.props.isSignedIn} logout={this.logout}/>
                 <Switch>
-                    {!this.props.isSignedIn ? <Route path="/login" component={SignIn}/> : null}
-                    {!this.props.isSignedIn ? <Route path="/register" component={Register}/> : null}
-                    {!this.props.isSignedIn ? <Redirect to="/login"/> : null}
-                    <Route exact path="/" component={Home}/>
+                    <Route path="/login" component={RequireAuth(SignIn)}/>
+                    <Route path="/register" component={RequireAuth(Register)}/>
+                    {/*<Redirect to="/login"/>*/}
+                    <Route exact path="/" component={RequireAuth(Home)}/>
                 </Switch>
             </div>
         );
@@ -43,5 +49,8 @@ class App extends Component {
 const mapStateToProps = state => ({
     isSignedIn: state.auth.isSignedIn
 });
+const mapDispatchToProps = dispatch => ({
+    logout: () => dispatch(actions.logout())
+});
 
-export default connect(mapStateToProps, null)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

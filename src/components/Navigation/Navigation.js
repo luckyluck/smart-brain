@@ -1,12 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-const Navigation = ({ isSignedIn }) => {
+const Navigation = ({ isSignedIn, logout }) => {
     // TODO implement logout functionality
     if (isSignedIn) {
       return (
         <nav style={{display: 'flex', justifyContent: 'flex-end'}}>
-          <p className='f3 link dim black underline pa3 pointer'>Sign Out</p>
+          <p className='f3 link dim black underline pa3 pointer' onClick={logout}>Sign Out</p>
         </nav>
       );
     } else {

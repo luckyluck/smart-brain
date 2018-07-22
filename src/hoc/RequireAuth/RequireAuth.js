@@ -42,6 +42,7 @@ const requireAuth = Component => {
                     this.props.history.push('/');
                 }
             }).catch(() => {
+                localStorage.removeItem('sessionId');
                 if (!this.exceptionPages.includes(this.props.history.location.pathname)) {
                     this.props.history.push('/login');
                 }

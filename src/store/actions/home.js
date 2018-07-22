@@ -20,7 +20,7 @@ export const imageUrl = (input, userId) => {
             }
             dispatch(setBox(calculateFaceLocation(response.data)));
         })
-        .catch(err => console.log(err));
+        .catch(console.log);
     };
 };
 

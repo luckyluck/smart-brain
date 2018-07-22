@@ -2,7 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
     imageUrl: '',
-    box: {},
+    boxes: [],
     entries: 0
 };
 
@@ -17,7 +17,7 @@ const home = (state = initialState, action) => {
         case actionTypes.SET_BOX: {
             return {
                 ...state,
-                box: action.payload
+                boxes: action.payload
             };
         }
         case actionTypes.SET_ENTRIES: {

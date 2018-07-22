@@ -31,7 +31,7 @@ class Home extends React.Component {
                     onInputChange={this.onInputChange}
                     onButtonSubmit={this.onButtonSubmit}
                 />
-                <FaceRecognition box={this.props.box} imageUrl={this.props.url}/>
+                <FaceRecognition boxes={this.props.boxes} imageUrl={this.props.url}/>
             </div>
         );
     }
@@ -40,7 +40,7 @@ class Home extends React.Component {
 const mapStateToProps = state => ({
     url: state.home.imageUrl,
     entries: state.home.entries,
-    box: state.home.box,
+    boxes: state.home.boxes,
     user: state.auth.user
 });
 const mapDispatchToProps = dispatch => ({

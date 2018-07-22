@@ -1,4 +1,3 @@
-// import { push } from 'react-router-redux';
 import axiosInstance from '../../axiosInstance';
 import * as actionTypes from './actionTypes';
 
@@ -20,7 +19,6 @@ export const register = (email, password, name) => {
                 axiosInstance.defaults.headers.common['sessionId'] = response.data.sessionId;
                 localStorage.setItem('sessionId', response.data.sessionId);
                 dispatch(loginUser(response.data.user));
-                // dispatch(push('/'));
             }
         });
     };
@@ -34,7 +32,6 @@ export const login = (email, password) => {
                 axiosInstance.defaults.headers.common['sessionId'] = response.data.sessionId;
                 localStorage.setItem('sessionId', response.data.sessionId);
                 dispatch(loginUser(response.data.user));
-                // dispatch(push('/'));
             }
         });
     };

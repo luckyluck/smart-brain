@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Particles from 'react-particles-js';
 import Navigation from './components/Navigation/Navigation';
@@ -29,19 +29,20 @@ class App extends Component {
 
     render() {
         return (
-            <div className="App">
-                <Particles
-                    className='particles'
-                    params={particlesOptions}
-                />
-                <Navigation isSignedIn={this.props.isSignedIn} logout={this.logout}/>
-                <Switch>
-                    <Route path="/login" component={RequireAuth(SignIn)}/>
-                    <Route path="/register" component={RequireAuth(Register)}/>
-                    {/*<Redirect to="/login"/>*/}
-                    <Route exact path="/" component={RequireAuth(Home)}/>
-                </Switch>
-            </div>
+            <BrowserRouter>
+                <div className="App">
+                    <Particles
+                        className='particles'
+                        params={particlesOptions}
+                    />
+                    <Navigation isSignedIn={this.props.isSignedIn} logout={this.logout}/>
+                    <Switch>
+                        <Route path="/login" component={RequireAuth(SignIn)}/>
+                        <Route path="/register" component={RequireAuth(Register)}/>
+                        <Route exact path="/" component={RequireAuth(Home)}/>
+                    </Switch>
+                </div>
+            </BrowserRouter>
         );
     }
 }

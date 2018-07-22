@@ -1,5 +1,5 @@
 import { push } from 'react-router-redux';
-import axios from 'axios';
+import axiosInstance from '../../axiosInstance';
 import * as actionTypes from './actionTypes';
 
 export const loadUser = user => ({
@@ -10,12 +10,12 @@ export const loadUser = user => ({
 export const auth = (email, password, name) => {
     // TODO move base url into the config
     return dispatch => {
-        axios.post(
-            'http://localhost:3001/register',
-            { email, password, name }
-        ).then(response => {
-            if (response.data.id) {
-                dispatch(loadUser(response.data));
+        axiosInstance.post('register', { email, password, name }).then(response => {
+            if (response.data.user.id) {
+                // FIXME probably, there is a proper way to update header's token after user's authorization
+                axiosInstance.defaults.headers.common['sessionId'] = response.data.sessionId;
+                localStorage.setItem('sessionId', response.data.sessionId);
+                dispatch(loadUser(response.data.user));
                 dispatch(push('/'));
             }
         });
@@ -24,12 +24,12 @@ export const auth = (email, password, name) => {
 
 export const signIn = (email, password) => {
     return dispatch => {
-        axios.post(
-            'http://localhost:3001/signin',
-            { email, password }
-        ).then(response => {
-            if (response.data.id) {
-                dispatch(loadUser(response.data));
+        axiosInstance.post('login', { email, password }).then(response => {
+            if (response.data.user.id) {
+                // FIXME probably, there is a proper way to update header's token after user's authorization
+                axiosInstance.defaults.headers.common['sessionId'] = response.data.sessionId;
+                localStorage.setItem('sessionId', response.data.sessionId);
+                dispatch(loadUser(response.data.user));
                 dispatch(push('/'));
             }
         });

@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import axios from 'axios';
+import axiosInstance from '../../axiosInstance';
 
 export const setInput = input => ({
     type: actionTypes.SET_INPUT,
@@ -14,32 +14,22 @@ export const setBox = box => ({
 export const imageUrl = (input, userId) => {
     return dispatch => {
         dispatch(setInput(input));
-        axios.post(
-            'http://localhost:3001/imageurl',
-            { input: this.state.input }
-        )
-            // .then(response => response.json())
-            .then(response => {
-                if (response) {
-                    dispatch(image(userId));
-                }
-                dispatch(setBox(calculateFaceLocation(response)));
-            })
-            .catch(err => console.log(err));
+        axiosInstance.post('imageurl', { input: this.state.input }).then(response => {
+            if (response) {
+                dispatch(image(userId));
+            }
+            dispatch(setBox(calculateFaceLocation(response)));
+        })
+        .catch(err => console.log(err));
     };
 };
 
 export const image = userId => {
     return dispatch => {
-        axios.put(
-            'http://localhost:3001/image',
-            { id: userId }
-        )
-            // .then(response => response.json())
-            .then(count => {
-                dispatch(setEntries(count));
-            })
-            .catch(console.log);
+        axiosInstance.put('image', { id: userId }).then(count => {
+            dispatch(setEntries(count));
+        })
+        .catch(console.log);
     };
 };
 

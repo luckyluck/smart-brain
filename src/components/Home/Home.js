@@ -24,7 +24,7 @@ class Home extends React.Component {
             <div>
                 <Logo/>
                 <Rank
-                    name={this.props.name}
+                    name={this.props.user.name}
                     entries={this.props.entries}
                 />
                 <ImageLinkForm

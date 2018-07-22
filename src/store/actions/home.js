@@ -14,11 +14,11 @@ export const setBox = box => ({
 export const imageUrl = (input, userId) => {
     return dispatch => {
         dispatch(setInput(input));
-        axiosInstance.post('imageurl', { input: this.state.input }).then(response => {
+        axiosInstance.post('imageurl', { input }).then(response => {
             if (response) {
                 dispatch(image(userId));
             }
-            dispatch(setBox(calculateFaceLocation(response)));
+            dispatch(setBox(calculateFaceLocation(response.data)));
         })
         .catch(err => console.log(err));
     };
@@ -27,7 +27,7 @@ export const imageUrl = (input, userId) => {
 export const image = userId => {
     return dispatch => {
         axiosInstance.put('image', { id: userId }).then(count => {
-            dispatch(setEntries(count));
+            dispatch(setEntries(count.data));
         })
         .catch(console.log);
     };
